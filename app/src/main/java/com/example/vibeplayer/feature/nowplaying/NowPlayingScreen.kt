@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import coil.request.ImageRequest
 import com.example.vibeplayer.core.playback.PlaybackState
 import com.example.vibeplayer.core.presentation.designsystem.components.DefaultSongIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
+import com.example.vibeplayer.core.presentation.designsystem.theme.accent
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyMediumRegular
 import com.example.vibeplayer.core.util.applyMarquee
 import com.example.vibeplayer.feature.nowplaying.components.NowPlayingBottomBar
@@ -43,7 +45,6 @@ fun NowPlayingScreenRoot(
     NowPlayingScreen(state) { action ->
         viewModel.onAction(action)
     }
-
 }
 
 @Composable
@@ -79,6 +80,12 @@ fun NowPlayingScreen(
                 contentScale = ContentScale.Crop,
                 error = {
                     DefaultSongIcon()
+                },
+                loading = {
+                    CircularProgressIndicator(
+                        modifier = Modifier.padding(60.dp),
+                        color = MaterialTheme.colorScheme.accent
+                    )
                 }
             )
 
