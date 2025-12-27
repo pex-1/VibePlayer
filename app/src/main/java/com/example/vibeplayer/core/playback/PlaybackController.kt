@@ -100,11 +100,16 @@ class PlaybackController(
         }
     }
 
+    fun stop() {
+        if (player.isPlaying) {
+            player.pause()
+        }
+    }
+
     fun next() {
         if (currentIndex < playlist.lastIndex) {
             currentIndex++
             player.seekToDefaultPosition(currentIndex)
-            player.playWhenReady = true
         }
     }
 
@@ -112,7 +117,6 @@ class PlaybackController(
         if (currentIndex > 0) {
             currentIndex--
             player.seekToDefaultPosition(currentIndex)
-            player.playWhenReady = true
         }
     }
 }

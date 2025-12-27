@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">VibePlayer</string>
     <string name="logo_image">Logo Image</string>
-    <string name="access_needed_string">VibePlayer needs access to your music files to build\nyour library and play songs</string>
+    <string name="access_needed_string">VibePlayer needs access to your music files to build your library and play songs</string>
     <string name="allow_access">Allow Access</string>
 
     <string name="permission_denied">Permission Denied</string>

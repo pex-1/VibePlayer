@@ -45,7 +45,7 @@ class NowPlayingViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        playbackController.play()
+        playbackController.stop()
     }
 
     fun onAction(action: NowPlayingActions) {

@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,8 +38,6 @@ import com.example.vibeplayer.core.presentation.designsystem.components.VibePlay
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerIcons
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyMediumRegular
-import com.example.vibeplayer.core.presentation.designsystem.theme.textPrimary
-import com.example.vibeplayer.core.presentation.designsystem.theme.textSecondary
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -48,7 +48,7 @@ fun PermissionScreenRoot(
     val permissionUiState by viewModel.permissionUiState.collectAsStateWithLifecycle()
 
     PermissionScreen(permissionUiState) { action ->
-        when(action) {
+        when (action) {
             is PermissionActions.NavigateMainPage -> onNavigateToMain()
             else -> viewModel.onActions(action)
         }
@@ -74,6 +74,7 @@ fun PermissionScreen(
                     onActions(PermissionActions.NavigateMainPage)
                 }
             }
+
             else -> {}
         }
     }
@@ -84,9 +85,6 @@ fun PermissionScreen(
             if (hasGranted) {
                 onActions(PermissionActions.NavigateMainPage)
             } else {
-                //Check if permanently denied
-                //this will set automatically true if the user deny permission twice since
-                //it's handled internally by android studio
                 val permanentlyDenied =
                     !ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
                 if (permanentlyDenied) {
@@ -98,9 +96,13 @@ fun PermissionScreen(
 
     Box(
         modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .widthIn(max = 380.dp)
+                .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -111,21 +113,20 @@ fun PermissionScreen(
             )
 
             Text(
-                modifier = Modifier.padding(top = 28.dp),
+                modifier = Modifier.padding(top = 20.dp),
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.titleLarge
             )
 
             Text(
-                modifier = Modifier.padding(top = 4.dp),
+                modifier = Modifier.padding(top = 4.dp, bottom = 20.dp),
                 text = stringResource(R.string.access_needed_string),
                 style = MaterialTheme.typography.bodyMediumRegular,
+                minLines = 2,
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.padding(bottom = 16.dp))
-
-            VibePlayerPrimaryButton (
+            VibePlayerPrimaryButton(
                 text = stringResource(R.string.allow_access),
             ) {
                 permissionLauncher.launch(permission)
