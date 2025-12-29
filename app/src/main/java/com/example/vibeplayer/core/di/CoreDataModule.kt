@@ -8,9 +8,11 @@ import com.example.vibeplayer.core.datastore.SettingsDataStoreImpl
 import com.example.vibeplayer.core.domain.SettingsDataStore
 import com.example.vibeplayer.core.domain.SongRepository
 import com.example.vibeplayer.core.playback.PlaybackController
+import com.example.vibeplayer.core.playback.PlaybackViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -31,4 +33,5 @@ val coreDataModule = module {
     single {
         PlaybackController(get(), CoroutineScope(SupervisorJob() + Dispatchers.Main))
     }
+    viewModelOf(::PlaybackViewModel)
 }

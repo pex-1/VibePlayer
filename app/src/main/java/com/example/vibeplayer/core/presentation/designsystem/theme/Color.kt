@@ -13,3 +13,4 @@ val Accent = Color(0xFFF1FF95)
 val ShadowColor = Color(0x40C277FF)
 
 val SurfaceOutline = Color(0xFF1A2735)
+val OnSurface = Color(0x26FFFFFF)

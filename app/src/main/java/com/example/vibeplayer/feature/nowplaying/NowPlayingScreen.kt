@@ -1,5 +1,6 @@
 package com.example.vibeplayer.feature.nowplaying
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -37,9 +38,8 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun NowPlayingScreenRoot(
-    songId: Long,
+    viewModel: NowPlayingViewModel = koinViewModel()
 ) {
-    val viewModel: NowPlayingViewModel = koinViewModel { parametersOf(songId) }
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     NowPlayingScreen(state) { action ->
@@ -56,6 +56,7 @@ fun NowPlayingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
     ) {
         Column(
@@ -111,9 +112,7 @@ fun NowPlayingScreen(
             )
 
         }
-        val progress = if (state.durationMs == 0L) 0f
-        else (state.positionMs.toFloat() / state.durationMs.toFloat())
-        NowPlayingBottomBar(isPlaying = state.isPlaying, progress = progress, onAction = onAction)
+        NowPlayingBottomBar(state = state, onAction = onAction)
     }
 }
 

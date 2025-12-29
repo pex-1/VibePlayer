@@ -12,5 +12,6 @@ data class PlaybackState(
     val hasPrevious: Boolean = false,
     val title: String = "",
     val artist: String = "",
-    val artUri: Uri? = null
+    val artUri: Uri? = null,
+    val repeatMode: RepeatMode = RepeatMode.OFF,
 )

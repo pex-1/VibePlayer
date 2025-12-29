@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerIcons
+import com.example.vibeplayer.core.presentation.designsystem.theme.ArrowLeftIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyLargeMedium
 import com.example.vibeplayer.core.presentation.designsystem.theme.buttonHover
@@ -48,7 +48,7 @@ fun SettingsTopBar(
                 onClick = onBackClick
             ) {
                 Icon(
-                    imageVector = VibePlayerIcons.ArrowLeft,
+                    imageVector = ArrowLeftIcon,
                     contentDescription = "Go back",
                     tint = MaterialTheme.colorScheme.textSecondary
                 )

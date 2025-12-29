@@ -12,6 +12,13 @@ interface SongDao {
     @Query("SELECT * FROM songentity ORDER BY title ASC")
     fun getSongs(): Flow<List<SongEntity>>
 
+    @Query(
+        "SELECT * FROM songentity " +
+                "WHERE title LIKE '%' || :query || '%' OR artist LIKE '%' || :query || '%' " +
+                "COLLATE NOCASE ORDER BY title ASC"
+    )
+    suspend fun searchSongs(query: String): List<SongEntity>
+
     @Upsert
     suspend fun upsertSong(song: SongEntity)
 

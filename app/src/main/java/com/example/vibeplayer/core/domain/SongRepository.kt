@@ -8,6 +8,8 @@ interface SongRepository {
 
     fun getSongs(): Flow<List<Song>>
 
+    suspend fun searchSongs(query: String): List<Song>
+
     fun getDefaultDuration(): Flow<Int>
 
     fun getDefaultSize(): Flow<Int>
