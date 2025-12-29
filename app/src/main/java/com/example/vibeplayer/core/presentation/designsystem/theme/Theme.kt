@@ -13,6 +13,8 @@ import androidx.core.view.WindowCompat
 private val colorScheme = darkColorScheme(
     primary = ButtonPrimary,
     background = SurfaceBg,
+    surface = SurfaceOutline,
+    onSurface = OnSurface
 )
 
 @Composable

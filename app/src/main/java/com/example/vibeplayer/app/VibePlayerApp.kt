@@ -8,6 +8,7 @@ import com.example.vibeplayer.core.di.coreDataModule
 import com.example.vibeplayer.feature.main.di.mainModule
 import com.example.vibeplayer.feature.nowplaying.di.nowPlayingModule
 import com.example.vibeplayer.feature.permission.di.permissionModule
+import com.example.vibeplayer.feature.search.di.searchModule
 import com.example.vibeplayer.feature.settings.di.settingsModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +37,8 @@ class VibePlayerApp : Application() {
                 coreDataModule,
                 databaseModule,
                 settingsModule,
-                nowPlayingModule
+                nowPlayingModule,
+                searchModule
             )
         }
     }

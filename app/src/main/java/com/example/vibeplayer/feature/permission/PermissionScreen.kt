@@ -9,7 +9,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,7 +34,7 @@ import com.example.vibeplayer.app.MainActivity
 import com.example.vibeplayer.core.presentation.designsystem.buttons.VibePlayerPrimaryButton
 import com.example.vibeplayer.core.presentation.designsystem.components.VibePLayerLifecycleEventListener
 import com.example.vibeplayer.core.presentation.designsystem.components.VibePlayerDialog
-import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerIcons
+import com.example.vibeplayer.core.presentation.designsystem.theme.LogoIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyMediumRegular
 import org.koin.androidx.compose.koinViewModel
@@ -74,7 +73,6 @@ fun PermissionScreen(
                     onActions(PermissionActions.NavigateMainPage)
                 }
             }
-
             else -> {}
         }
     }
@@ -108,7 +106,7 @@ fun PermissionScreen(
         ) {
             Image(
                 modifier = Modifier.size(56.dp),
-                imageVector = VibePlayerIcons.Logo,
+                imageVector = LogoIcon,
                 contentDescription = stringResource(R.string.logo_icon)
             )
 

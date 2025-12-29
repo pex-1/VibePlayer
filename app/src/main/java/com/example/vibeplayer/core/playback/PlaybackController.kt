@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class PlaybackController(
     private val player: ExoPlayer,
@@ -81,18 +82,30 @@ class PlaybackController(
         positionJob = null
     }
 
-    fun setPlaylist(
-        items: List<MediaItem>,
-        startIndex: Int = 0
-    ) {
+    fun setPlaylist(items: List<MediaItem>) {
         playlist = items
-        currentIndex = startIndex
-
-        player.setMediaItems(items, startIndex, 0L)
+        player.setMediaItems(playlist, 0, 0L)
         player.prepare()
     }
 
-    fun play() {
+    fun setCurrentIndex(startIndex: String) {
+        currentIndex = playlist.indexOfFirst { it.mediaId == startIndex }
+        player.seekTo(currentIndex, 0L)
+    }
+
+    fun playFromTheStart() {
+        player.seekTo(0, 0L)
+        player.play()
+    }
+
+    fun shuffleAndPlay() {
+        val startPosition = Random.nextInt(0, playlist.size - 1)
+        player.seekTo(startPosition, 0L)
+        player.shuffleModeEnabled = true
+        player.play()
+    }
+
+    fun playPause() {
         if (player.isPlaying) {
             player.pause()
         } else {
@@ -100,23 +113,36 @@ class PlaybackController(
         }
     }
 
-    fun stop() {
-        if (player.isPlaying) {
-            player.pause()
+    fun toggleRepeatMode() {
+        val currentMode = playbackState.value.repeatMode
+        val nextMode = when (currentMode) {
+            RepeatMode.OFF -> RepeatMode.ALL
+            RepeatMode.ALL -> RepeatMode.ONE
+            RepeatMode.ONE -> RepeatMode.OFF
+        }
+        player.repeatMode = nextMode.playerMode
+        _playbackState.update {
+            it.copy(repeatMode = nextMode)
         }
     }
 
+    fun shufflePlaylist() {
+        player.shuffleModeEnabled = !player.shuffleModeEnabled
+    }
+
+    fun seekTo(position: Long) {
+        player.seekTo(position)
+    }
+
     fun next() {
-        if (currentIndex < playlist.lastIndex) {
-            currentIndex++
-            player.seekToDefaultPosition(currentIndex)
+        if (player.hasNextMediaItem()) {
+            player.seekToNextMediaItem()
         }
     }
 
     fun previous() {
-        if (currentIndex > 0) {
-            currentIndex--
-            player.seekToDefaultPosition(currentIndex)
+        if (player.hasPreviousMediaItem()) {
+            player.seekToPreviousMediaItem()
         }
     }
 }

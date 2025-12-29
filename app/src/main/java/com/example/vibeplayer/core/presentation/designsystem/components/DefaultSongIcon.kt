@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerIcons
+import com.example.vibeplayer.core.presentation.designsystem.theme.MusicIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.designsystem.theme.accent
 
@@ -45,7 +45,7 @@ fun DefaultSongIcon() {
 
         Image(
             modifier = Modifier.size(iconSize),
-            imageVector = VibePlayerIcons.MusicIcon,
+            imageVector = MusicIcon,
             contentDescription = "Note icon"
         )
     }

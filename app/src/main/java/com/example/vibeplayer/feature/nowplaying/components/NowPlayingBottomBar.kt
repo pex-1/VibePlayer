@@ -1,52 +1,48 @@
 package com.example.vibeplayer.feature.nowplaying.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerIcons
+import com.example.vibeplayer.core.playback.PlaybackState
+import com.example.vibeplayer.core.playback.RepeatMode
+import com.example.vibeplayer.core.presentation.designsystem.theme.PauseIcon
+import com.example.vibeplayer.core.presentation.designsystem.theme.PlayIcon
+import com.example.vibeplayer.core.presentation.designsystem.theme.RepeatAllIcon
+import com.example.vibeplayer.core.presentation.designsystem.theme.RepeatOffIcon
+import com.example.vibeplayer.core.presentation.designsystem.theme.RepeatOneIcon
+import com.example.vibeplayer.core.presentation.designsystem.theme.ShuffleIcon
+import com.example.vibeplayer.core.presentation.designsystem.theme.SkipNextIcon
+import com.example.vibeplayer.core.presentation.designsystem.theme.SkipPreviousIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.designsystem.theme.surfaceBG
 import com.example.vibeplayer.core.presentation.designsystem.theme.surfaceOutline
+import com.example.vibeplayer.core.presentation.designsystem.theme.textDisabled
 import com.example.vibeplayer.core.presentation.designsystem.theme.textPrimary
 import com.example.vibeplayer.core.presentation.designsystem.theme.textSecondary
 import com.example.vibeplayer.feature.nowplaying.NowPlayingActions
 
 @Composable
 fun NowPlayingBottomBar(
-    isPlaying: Boolean = false,
-    progress: Float = 0f,
+    state: PlaybackState = PlaybackState(),
     onAction: (NowPlayingActions) -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(6.dp),
-            progress = {
-                progress
-            },
-            color = MaterialTheme.colorScheme.textPrimary,
-            trackColor = MaterialTheme.colorScheme.surfaceOutline,
-            strokeCap = ProgressIndicatorDefaults.LinearStrokeCap
+        NowPlayingProgressSlider(
+            state = state,
+            onSeek = {
+                onAction(NowPlayingActions.OnSeekAction(it))
+            }
         )
 
         Row(
@@ -56,58 +52,78 @@ fun NowPlayingBottomBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            IconButton(
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceOutline),
-                onClick = {
-                    onAction(NowPlayingActions.OnPlayPreviousAction)
-                }
-            ) {
-                Icon(
-                    modifier = Modifier.size(16.dp),
-                    imageVector = VibePlayerIcons.SkipPrevious,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.textSecondary
-                )
-            }
 
-            IconButton(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .size(60.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.textPrimary),
-                onClick = {
-                    onAction(NowPlayingActions.OnPlayAction)
-                }
-            ) {
-                Icon(
-                    modifier = Modifier.size(20.dp),
-                    imageVector = if (isPlaying) VibePlayerIcons.Pause else VibePlayerIcons.Play,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.surfaceBG
-                )
-            }
+            val iconTint = if (state.isPlaying) MaterialTheme.colorScheme.textSecondary
+            else MaterialTheme.colorScheme.textDisabled
+            val iconBackground = if (state.isPlaying) MaterialTheme.colorScheme.surfaceOutline
+            else Color.Transparent
+            PlayerControlButton(
+                icon = ShuffleIcon,
+                onButtonClick = {
+                    onAction(NowPlayingActions.OnShuffleAction)
+                },
+                background = iconBackground,
+                iconTint = iconTint
+            )
 
-            IconButton(
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceOutline),
-                onClick = {
-                    onAction(NowPlayingActions.OnPlayNextAction)
-                }
-            ) {
-                Icon(
-                    modifier = Modifier.size(16.dp),
-                    imageVector = VibePlayerIcons.SkipNext,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.textSecondary
-                )
-            }
+            MainControls(modifier = Modifier.weight(1f), onAction = onAction, state = state)
+
+            PlayerControlButton(
+                icon = getRepeatModeIcon(state.repeatMode),
+                onButtonClick = {
+                    onAction(NowPlayingActions.OnRepeatAction)
+                },
+                background = iconBackground,
+                iconTint = iconTint
+            )
         }
+    }
+}
+
+@Composable
+private fun getRepeatModeIcon(repeatMode: RepeatMode) =
+    when (repeatMode) {
+        RepeatMode.OFF -> RepeatOffIcon
+        RepeatMode.ALL -> RepeatAllIcon
+        RepeatMode.ONE -> RepeatOneIcon
+    }
+
+
+@Composable
+fun MainControls(
+    modifier: Modifier = Modifier,
+    onAction: (NowPlayingActions) -> Unit = {},
+    state: PlaybackState
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        PlayerControlButton(
+            icon = SkipPreviousIcon,
+            onButtonClick = {
+                onAction(NowPlayingActions.OnPlayPreviousAction)
+            }
+        )
+
+        PlayerControlButton(
+            icon = if (state.isPlaying) PauseIcon else PlayIcon,
+            onButtonClick = {
+                onAction(NowPlayingActions.OnPlayAction)
+            },
+            background = MaterialTheme.colorScheme.textPrimary,
+            iconTint = MaterialTheme.colorScheme.surfaceBG,
+            size = 60.dp,
+            padding = 16.dp
+        )
+
+        PlayerControlButton(
+            icon = SkipNextIcon,
+            onButtonClick = {
+                onAction(NowPlayingActions.OnPlayNextAction)
+            }
+        )
     }
 }
 

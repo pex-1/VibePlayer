@@ -33,6 +33,10 @@ class SongRepositoryImpl(
         return songDao.getSongs().map { it.toDomainList() }
     }
 
+    override suspend fun searchSongs(query: String): List<Song> {
+        return songDao.searchSongs(query).toDomainList()
+    }
+
     override fun getDefaultDuration(): Flow<Int> {
         return settingsDataStore.getDefaultDuration()
     }

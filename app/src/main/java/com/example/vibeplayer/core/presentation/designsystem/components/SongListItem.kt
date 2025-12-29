@@ -1,4 +1,4 @@
-package com.example.vibeplayer.feature.main.components
+package com.example.vibeplayer.core.presentation.designsystem.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.example.vibeplayer.core.domain.model.Song
-import com.example.vibeplayer.core.presentation.designsystem.components.DefaultSongIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.designsystem.theme.accent
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyMediumRegular
@@ -33,7 +32,7 @@ import com.example.vibeplayer.core.util.toMinutesSeconds
 import com.example.vibeplayer.feature.main.PreviewDataSource
 
 @Composable
-fun MainListItem(
+fun SongListItem(
     song: Song,
     onSongClickedAction: (Long) -> Unit = {}
 ) {
@@ -101,8 +100,8 @@ fun MainListItem(
 
 @Preview(showBackground = true)
 @Composable
-private fun MainListItemPreview() {
+private fun SongListItemPreview() {
     VibePlayerTheme {
-        MainListItem(PreviewDataSource.previewSongList[0])
+        SongListItem(PreviewDataSource.previewSongList[0])
     }
 }
