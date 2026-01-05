@@ -52,7 +52,7 @@ fun SongListItem(
                 .clip(RoundedCornerShape(10.dp)),
             contentDescription = null,
             model = ImageRequest.Builder(LocalContext.current)
-                .data(song.albumId)
+                .data(song.albumArtUri)
                 .crossfade(true)
                 .build(),
             contentScale = ContentScale.Crop,

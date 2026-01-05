@@ -15,5 +15,4 @@ val appModule = module{
     single<CoroutineScope> {
         (androidApplication() as VibePlayerApp).applicationScope
     }
-
 }

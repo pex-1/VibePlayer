@@ -1,6 +1,5 @@
 package com.example.vibeplayer.core.database
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -12,7 +11,6 @@ import androidx.room.PrimaryKey
 data class SongEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    @ColumnInfo(name = "mediaStoreId")
     val mediaStoreId: Long,
 
     val title: String,
