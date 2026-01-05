@@ -96,12 +96,9 @@ class MainViewModel(
         when (action) {
             is MainActions.SyncSongs -> onForceResync()
 
-            is MainActions.OpenNowPlaying -> {
-                playbackController.setCurrentIndex(action.songId.toString())
-            }
-
-            MainActions.OnPlayAction -> playbackController.playFromTheStart()
-            MainActions.OnShuffleAction -> playbackController.shuffleAndPlay()
+            is MainActions.OnPlayAction -> playbackController.playFromTheStart()
+            is MainActions.OnShuffleAction -> playbackController.shuffleAndPlay()
+            else -> {}
         }
     }
 

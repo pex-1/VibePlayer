@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.example.vibeplayer.core.playback.PlaybackController
 
 class NowPlayingViewModel(
-    private val playbackController: PlaybackController
+    private val playbackController: PlaybackController,
+    songId: Long
 ) : ViewModel() {
     val state = playbackController.playbackState
 
@@ -12,6 +13,9 @@ class NowPlayingViewModel(
     private var isSeeking = false
 
     init {
+        if (songId > -1) {
+            playbackController.setCurrentIndex(songId.toString())
+        }
         playbackController.showMiniPlayer()
     }
 

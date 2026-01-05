@@ -94,7 +94,7 @@ fun NavigationRoot(
             MiniPlayerRoot(
                 isMainScreen = backStack.lastOrNull() is NavigationScreens.MainPage,
                 openNowPlaying = {
-                    backStack.add(NavigationScreens.NowPlaying)
+                    backStack.add(NavigationScreens.NowPlaying(-1))
                 })
         },
         topBar = {
@@ -147,7 +147,7 @@ fun NavigationRoot(
 
                 entry<NavigationScreens.MainPage> {
                     MainScreenRoot(openNowPlaying = {
-                        backStack.add(NavigationScreens.NowPlaying)
+                        backStack.add(NavigationScreens.NowPlaying(it))
                     })
                 }
 
@@ -164,8 +164,8 @@ fun NavigationRoot(
                                     animationSpec = tween(600)
                                 )
                     }
-                ) {
-                    NowPlayingScreenRoot()
+                ) { navEntry ->
+                    NowPlayingScreenRoot(songId = navEntry.songId)
                 }
 
                 entry<NavigationScreens.Settings> {
@@ -180,7 +180,7 @@ fun NavigationRoot(
                             backStack.removeLastOrNull()
                         },
                         onPlaySong = {
-                            backStack.add(NavigationScreens.NowPlaying)
+                            backStack.add(NavigationScreens.NowPlaying(it))
                         })
                 }
 

@@ -13,14 +13,14 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MainScreenRoot(
     viewModel: MainViewModel = koinViewModel(),
-    openNowPlaying: () -> Unit = {},
+    openNowPlaying: (Long) -> Unit = {},
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     MainScreen(state) {
         viewModel.onAction(it)
-        if (it !is MainActions.SyncSongs) {
-            openNowPlaying()
+        if (it is MainActions.OpenNowPlaying) {
+            openNowPlaying(it.songId)
         }
     }
 }
