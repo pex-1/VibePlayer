@@ -1,6 +1,5 @@
 package com.example.vibeplayer.app.navigation
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
@@ -18,12 +17,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -31,7 +26,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import com.example.vibeplayer.core.playback.MiniPlayerRoot
+import com.example.vibeplayer.feature.miniplayer.MiniPlayerRoot
 import com.example.vibeplayer.core.presentation.designsystem.theme.buttonPrimary
 import com.example.vibeplayer.core.presentation.designsystem.theme.textPrimary
 import com.example.vibeplayer.core.presentation.util.ObserveAsEvents
@@ -52,11 +47,11 @@ fun NavigationRoot(
     permissionGranted: Boolean
 ) {
 
-    val firstScreen = if (permissionGranted) NavigationScreens.MainPage else NavigationScreens.Permission
+    val firstScreen =
+        if (permissionGranted) NavigationScreens.MainPage else NavigationScreens.Permission
     val backStack = rememberNavBackStack(firstScreen)
 
     val currentScreen = backStack.lastOrNull()
-    var miniPlayerActive by rememberSaveable { mutableStateOf(false) }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -96,15 +91,11 @@ fun NavigationRoot(
                 })
         },
         bottomBar = {
-            AnimatedVisibility(
-                visible = backStack.lastOrNull() is NavigationScreens.MainPage && miniPlayerActive,
-                enter = slideInVertically { it },
-                exit = slideOutVertically { it }
-            ) {
-                MiniPlayerRoot(openNowPlaying = {
+            MiniPlayerRoot(
+                isMainScreen = backStack.lastOrNull() is NavigationScreens.MainPage,
+                openNowPlaying = {
                     backStack.add(NavigationScreens.NowPlaying)
                 })
-            }
         },
         topBar = {
             when (currentScreen) {
@@ -174,7 +165,6 @@ fun NavigationRoot(
                                 )
                     }
                 ) {
-                    miniPlayerActive = true
                     NowPlayingScreenRoot()
                 }
 

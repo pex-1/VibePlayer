@@ -7,6 +7,7 @@ import com.example.vibeplayer.core.database.di.databaseModule
 import com.example.vibeplayer.core.di.coreDataModule
 import com.example.vibeplayer.core.di.coreModule
 import com.example.vibeplayer.feature.main.di.mainModule
+import com.example.vibeplayer.feature.miniplayer.di.miniPlayerModule
 import com.example.vibeplayer.feature.nowplaying.di.nowPlayingModule
 import com.example.vibeplayer.feature.permission.di.permissionModule
 import com.example.vibeplayer.feature.search.di.searchModule
@@ -40,7 +41,8 @@ class VibePlayerApp : Application() {
                 databaseModule,
                 settingsModule,
                 nowPlayingModule,
-                searchModule
+                searchModule,
+                miniPlayerModule
             )
         }
     }

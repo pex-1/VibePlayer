@@ -11,6 +11,10 @@ class NowPlayingViewModel(
     private var wasPlayingBeforeSeek = false
     private var isSeeking = false
 
+    init {
+        playbackController.showMiniPlayer()
+    }
+
     fun onAction(action: NowPlayingActions) {
         when (action) {
             is NowPlayingActions.OnPlayAction -> playbackController.togglePlayPause()

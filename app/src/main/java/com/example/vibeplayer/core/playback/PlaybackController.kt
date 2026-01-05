@@ -61,6 +61,12 @@ class PlaybackController(
         })
     }
 
+    fun showMiniPlayer(){
+        _playbackState.update {
+            it.copy(showMiniPlayer = true)
+        }
+    }
+
     private fun startPositionUpdates() {
         if (positionJob?.isActive == true) return
 
@@ -154,5 +160,9 @@ class PlaybackController(
         if (player.hasPreviousMediaItem()) {
             player.seekToPreviousMediaItem()
         }
+    }
+
+    fun releasePlayer() {
+        player.release()
     }
 }

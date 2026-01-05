@@ -104,4 +104,8 @@ class MainViewModel(
             MainActions.OnShuffleAction -> playbackController.shuffleAndPlay()
         }
     }
+
+    override fun onCleared() {
+        playbackController.releasePlayer()
+    }
 }

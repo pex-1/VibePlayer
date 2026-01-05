@@ -14,4 +14,5 @@ data class PlaybackState(
     val artist: String = "",
     val artUri: Uri? = null,
     val repeatMode: RepeatMode = RepeatMode.OFF,
+    val showMiniPlayer: Boolean = false
 )

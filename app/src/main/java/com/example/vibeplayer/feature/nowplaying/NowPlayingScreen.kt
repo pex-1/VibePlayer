@@ -34,7 +34,6 @@ import com.example.vibeplayer.core.presentation.designsystem.theme.bodyMediumReg
 import com.example.vibeplayer.core.util.applyMarquee
 import com.example.vibeplayer.feature.nowplaying.components.NowPlayingBottomBar
 import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 @Composable
 fun NowPlayingScreenRoot(
