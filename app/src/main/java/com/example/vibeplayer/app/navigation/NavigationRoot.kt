@@ -94,6 +94,7 @@ fun NavigationRoot(
             MiniPlayerRoot(
                 isMainScreen = backStack.lastOrNull() is NavigationScreens.MainPage,
                 openNowPlaying = {
+                    //TODO: I'm not happy with passing -1 when current song shouldn't change, but I don't see a better solution
                     backStack.add(NavigationScreens.NowPlaying(-1))
                 })
         },

@@ -1,4 +1,4 @@
-package com.example.vibeplayer.core.data
+package com.example.vibeplayer.core.data.repository
 
 import com.example.vibeplayer.core.database.SongDao
 import com.example.vibeplayer.core.database.toDomainList
@@ -47,7 +47,7 @@ class SongRepositoryImpl(
                     val movedId = localSongProvider.findMovedSong(it.toDomainModel())
                     if (movedId != null) {
                         songDao.updateMediaStoreId(it.id, movedId)
-                    } else{
+                    } else {
                         songDao.removeSong(it)
                     }
 
@@ -97,4 +97,3 @@ class SongRepositoryImpl(
         }
     }
 }
-

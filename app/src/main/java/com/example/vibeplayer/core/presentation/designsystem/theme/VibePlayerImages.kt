@@ -5,9 +5,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import com.example.vibeplayer.R
 
-object VibePlayerImages {
-
-    val RadarImage: Painter
-        @Composable
-        get() = painterResource(R.drawable.radar_img)
-}
+val RadarImage: Painter
+    @Composable
+    get() = painterResource(R.drawable.radar_img)

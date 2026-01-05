@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerImages.RadarImage
+import com.example.vibeplayer.core.presentation.designsystem.theme.RadarImage
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyMediumRegular
 
