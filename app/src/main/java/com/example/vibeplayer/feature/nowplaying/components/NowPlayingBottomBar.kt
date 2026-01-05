@@ -40,9 +40,7 @@ fun NowPlayingBottomBar(
     ) {
         NowPlayingProgressSlider(
             state = state,
-            onSeek = {
-                onAction(NowPlayingActions.OnSeekAction(it))
-            }
+            onAction = onAction
         )
 
         Row(

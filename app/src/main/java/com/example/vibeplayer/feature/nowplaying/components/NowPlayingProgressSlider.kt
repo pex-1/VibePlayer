@@ -29,13 +29,14 @@ import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerThe
 import com.example.vibeplayer.core.presentation.designsystem.theme.surfaceOutline
 import com.example.vibeplayer.core.presentation.designsystem.theme.textPrimary
 import com.example.vibeplayer.core.util.formatTime
+import com.example.vibeplayer.feature.nowplaying.NowPlayingActions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NowPlayingProgressSlider(
     modifier: Modifier = Modifier,
     state: PlaybackState,
-    onSeek: (Long) -> Unit
+    onAction: (NowPlayingActions) -> Unit = {}
 ) {
 
     val progress = if (state.durationMs > 0) state.positionMs.toFloat() / state.durationMs else 0f
@@ -49,7 +50,15 @@ fun NowPlayingProgressSlider(
         Slider(
             value = progress,
             onValueChange = { fraction ->
-                onSeek((fraction * state.durationMs).toLong())
+                onAction(
+                    NowPlayingActions.OnSeekAction(
+                        position = (fraction * state.durationMs).toLong(),
+                        inProgress = true
+                    )
+                )
+            },
+            onValueChangeFinished = {
+                onAction(NowPlayingActions.OnSeekAction(inProgress = false))
             },
             modifier = Modifier.fillMaxWidth(),
             colors = SliderDefaults.colors(

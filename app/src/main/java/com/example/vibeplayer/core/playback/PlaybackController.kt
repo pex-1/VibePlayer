@@ -105,12 +105,20 @@ class PlaybackController(
         player.play()
     }
 
-    fun playPause() {
+    fun togglePlayPause() {
         if (player.isPlaying) {
             player.pause()
         } else {
             player.play()
         }
+    }
+
+    fun play() {
+        player.play()
+    }
+
+    fun pause() {
+        player.pause()
     }
 
     fun toggleRepeatMode() {
@@ -132,6 +140,9 @@ class PlaybackController(
 
     fun seekTo(position: Long) {
         player.seekTo(position)
+        _playbackState.update {
+            it.copy(positionMs = position)
+        }
     }
 
     fun next() {

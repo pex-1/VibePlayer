@@ -41,6 +41,7 @@ import com.example.vibeplayer.core.presentation.designsystem.theme.ShadowColor
 import com.example.vibeplayer.core.presentation.designsystem.theme.ShuffleIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.SurfaceOutline
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyLargeMedium
+import com.example.vibeplayer.core.presentation.designsystem.theme.textPrimary
 import com.example.vibeplayer.feature.main.MainActions
 import kotlinx.coroutines.launch
 
@@ -140,7 +141,8 @@ fun TrackListState(
             ) {
                 Icon(
                     imageVector = ArrowUpIcon,
-                    contentDescription = "Scroll to top"
+                    contentDescription = "Scroll to top",
+                    tint = MaterialTheme.colorScheme.textPrimary
                 )
             }
         }

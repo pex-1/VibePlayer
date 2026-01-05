@@ -14,8 +14,9 @@ class PlaybackViewModel(
             else -> {}
         }
     }
+
     fun onPlayPause() {
-        playbackController.playPause()
+        playbackController.togglePlayPause()
     }
 
     fun onPlayNext() {
