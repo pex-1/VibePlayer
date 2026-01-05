@@ -1,13 +1,13 @@
-package com.example.vibeplayer.core.data.repository
+package com.example.vibeplayer.core.data
 
 import com.example.vibeplayer.core.database.SongDao
-import com.example.vibeplayer.core.database.toDomainList
-import com.example.vibeplayer.core.database.toDomainModel
-import com.example.vibeplayer.core.database.toEntityList
 import com.example.vibeplayer.core.domain.LocalSongProvider
 import com.example.vibeplayer.core.domain.SettingsDataStore
 import com.example.vibeplayer.core.domain.SongRepository
 import com.example.vibeplayer.core.domain.model.Song
+import com.example.vibeplayer.core.mapper.toDomainList
+import com.example.vibeplayer.core.mapper.toDomainModel
+import com.example.vibeplayer.core.mapper.toEntityList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first

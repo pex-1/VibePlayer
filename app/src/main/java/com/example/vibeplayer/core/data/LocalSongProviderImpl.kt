@@ -1,4 +1,4 @@
-package com.example.vibeplayer.core.data.mediastore
+package com.example.vibeplayer.core.data
 
 import android.content.ContentResolver
 import android.content.ContentUris

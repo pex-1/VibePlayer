@@ -3,9 +3,9 @@ package com.example.vibeplayer.core.di
 import android.content.ContentResolver
 import android.content.Context
 import androidx.media3.exoplayer.ExoPlayer
-import com.example.vibeplayer.core.data.mediastore.LocalSongProviderImpl
-import com.example.vibeplayer.core.data.repository.SongRepositoryImpl
-import com.example.vibeplayer.core.data.datastore.SettingsDataStoreImpl
+import com.example.vibeplayer.core.data.LocalSongProviderImpl
+import com.example.vibeplayer.core.data.SongRepositoryImpl
+import com.example.vibeplayer.core.data.SettingsDataStoreImpl
 import com.example.vibeplayer.core.domain.LocalSongProvider
 import com.example.vibeplayer.core.domain.SettingsDataStore
 import com.example.vibeplayer.core.domain.SongRepository

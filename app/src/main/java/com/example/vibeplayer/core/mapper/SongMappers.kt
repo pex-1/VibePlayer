@@ -1,5 +1,6 @@
-package com.example.vibeplayer.core.database
+package com.example.vibeplayer.core.mapper
 
+import com.example.vibeplayer.core.database.SongEntity
 import com.example.vibeplayer.core.domain.model.Song
 
 fun List<SongEntity>.toDomainList(): List<Song> {
