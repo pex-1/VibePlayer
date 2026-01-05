@@ -45,7 +45,7 @@ import com.example.vibeplayer.feature.main.MainActions
 import kotlinx.coroutines.launch
 
 @Composable
-fun SongList(
+fun TrackListState(
     songs: List<Song>,
     onAction: (MainActions) -> Unit
 ) {
@@ -101,7 +101,7 @@ fun SongList(
             }
             itemsIndexed(
                 items = songs,
-                key = { _, song -> song.id }
+                key = { _, song -> song.songId }
             ) { index, song ->
                 SongListItem(song) {
                     onAction(MainActions.OpenNowPlaying(it))

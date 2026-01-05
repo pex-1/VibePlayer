@@ -15,7 +15,7 @@ class SongScanner(
 
         _isScanning.value = true
         return try {
-            val count = songRepository.scanSongs(applyFilters = applyFilters)
+            val count = songRepository.syncSongs(applyFilters = applyFilters)
             count
         } finally {
             _isScanning.value = false

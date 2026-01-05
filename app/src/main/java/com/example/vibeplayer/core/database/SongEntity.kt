@@ -1,17 +1,23 @@
 package com.example.vibeplayer.core.database
 
-import android.net.Uri
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    tableName = "songs",
+    indices = [Index(value = ["mediaStoreId"], unique = true)]
+)
 data class SongEntity(
-    @PrimaryKey
-    val id: Long,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0L,
+    @ColumnInfo(name = "mediaStoreId")
+    val mediaStoreId: Long,
+
     val title: String,
     val artist: String,
-    val filePath: String,
-    val duration: Long,
-    val size: Int,
-    val embeddedArt: Uri?,
+    val durationMs: Long,
+    val sizeBytes: Long,
+    val albumId: Long
 )

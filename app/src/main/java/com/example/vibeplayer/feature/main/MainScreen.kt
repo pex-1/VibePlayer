@@ -7,7 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.feature.main.components.EmptyState
 import com.example.vibeplayer.feature.main.components.LoadingState
-import com.example.vibeplayer.feature.main.components.SongList
+import com.example.vibeplayer.feature.main.components.TrackListState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -32,10 +32,10 @@ fun MainScreen(
 ) {
     if (state.isLoading) {
         LoadingState()
-    } else if (state.songs.isEmpty()) {
+    } else if (state.isEmpty) {
         EmptyState(onAction = onAction)
     } else {
-        SongList(state.songs, onAction = onAction)
+        TrackListState(state.songs, onAction = onAction)
     }
 }
 

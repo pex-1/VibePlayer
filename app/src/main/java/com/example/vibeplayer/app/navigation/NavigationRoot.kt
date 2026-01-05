@@ -52,8 +52,8 @@ fun NavigationRoot(
     permissionGranted: Boolean
 ) {
 
-    val backStack =
-        rememberNavBackStack(if (permissionGranted) NavigationScreens.MainPage else NavigationScreens.Permission)
+    val firstScreen = if (permissionGranted) NavigationScreens.MainPage else NavigationScreens.Permission
+    val backStack = rememberNavBackStack(firstScreen)
 
     val currentScreen = backStack.lastOrNull()
     var miniPlayerActive by rememberSaveable { mutableStateOf(false) }

@@ -5,6 +5,7 @@ import com.example.vibeplayer.BuildConfig
 import com.example.vibeplayer.app.di.appModule
 import com.example.vibeplayer.core.database.di.databaseModule
 import com.example.vibeplayer.core.di.coreDataModule
+import com.example.vibeplayer.core.di.coreModule
 import com.example.vibeplayer.feature.main.di.mainModule
 import com.example.vibeplayer.feature.nowplaying.di.nowPlayingModule
 import com.example.vibeplayer.feature.permission.di.permissionModule
@@ -34,6 +35,7 @@ class VibePlayerApp : Application() {
                 appModule,
                 permissionModule,
                 mainModule,
+                coreModule,
                 coreDataModule,
                 databaseModule,
                 settingsModule,

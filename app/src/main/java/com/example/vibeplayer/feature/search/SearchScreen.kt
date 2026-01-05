@@ -185,7 +185,7 @@ fun SearchScreen(
             ) {
                 itemsIndexed(
                     items = state.songs,
-                    key = { _, song -> song.id }
+                    key = { _, song -> song.songId }
                 ) { index, song ->
                     SongListItem(song) {
                 onAction(SearchActions.PlaySong(it))

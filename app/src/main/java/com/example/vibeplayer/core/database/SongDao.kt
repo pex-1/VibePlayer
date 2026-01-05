@@ -9,15 +9,27 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SongDao {
 
-    @Query("SELECT * FROM songentity ORDER BY title ASC")
-    fun getSongs(): Flow<List<SongEntity>>
+    @Query("SELECT * FROM songs ORDER BY title ASC")
+    fun observeSongs(): Flow<List<SongEntity>>
 
     @Query(
-        "SELECT * FROM songentity " +
+        "SELECT * FROM songs " +
                 "WHERE title LIKE '%' || :query || '%' OR artist LIKE '%' || :query || '%' " +
                 "COLLATE NOCASE ORDER BY title ASC"
     )
     suspend fun searchSongs(query: String): List<SongEntity>
+
+    @Query("SELECT * FROM songs ORDER BY title ASC")
+    suspend fun getSongsList(): List<SongEntity>
+
+    @Query("SELECT COUNT(*) FROM songs")
+    suspend fun getSongCount(): Int
+
+    @Query("DELETE FROM songs WHERE mediaStoreId NOT IN (:existingIds)")
+    suspend fun deleteMissing(existingIds: Set<Long>)
+
+    @Query("DELETE FROM songs WHERE mediaStoreId IN (:mediaStoreIds)")
+    suspend fun deleteByMediaStoreIds(mediaStoreIds: Set<Long>)
 
     @Upsert
     suspend fun upsertSong(song: SongEntity)
@@ -25,7 +37,7 @@ interface SongDao {
     @Delete
     suspend fun removeSong(song: SongEntity)
 
-    @Query("DELETE FROM songentity")
+    @Query("DELETE FROM songs")
     suspend fun removeAllSongs()
 
     @Upsert
