@@ -69,7 +69,7 @@ class MainViewModel(
     fun onForceResync() {
         viewModelScope.launch {
             isSyncing.value = true
-            songRepository.syncSongs(applyFilters = false)
+            songRepository.forceResync(applyFilters = false)
             isSyncing.value = false
         }
     }

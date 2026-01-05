@@ -2,12 +2,13 @@ package com.example.vibeplayer.feature.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vibeplayer.core.data.SongScanner
 import com.example.vibeplayer.core.domain.SongRepository
 import com.example.vibeplayer.core.presentation.util.SnackbarController
 import com.example.vibeplayer.core.presentation.util.SnackbarEvent
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -15,16 +16,18 @@ import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val songRepository: SongRepository,
-    private val songScanner: SongScanner
 ) : ViewModel() {
 
     private val _event = Channel<SettingsEvents>()
     val event = _event.receiveAsFlow()
 
+    private val _isScanning = MutableStateFlow(false)
+    val isScanning = _isScanning.asStateFlow()
+
     val state = combine(
         songRepository.getDefaultDuration(),
         songRepository.getDefaultSize(),
-        songScanner.isScanning
+        isScanning
     ) { duration, size, isScanning ->
         SettingsState(
             duration = DurationEnum.fromDuration(duration),
@@ -46,7 +49,7 @@ class SettingsViewModel(
             is SettingsAction.OnBackClickAction -> {}
             is SettingsAction.OnScanAction -> {
                 viewModelScope.launch {
-                    val count = songScanner.scan(true)
+                    val count = getNumberOfScannedSongs()
                     SnackbarController.sendEvent(
                         SnackbarEvent(
                             message = "Scan complete - $count songs found."
@@ -67,6 +70,18 @@ class SettingsViewModel(
                     songRepository.setDefaultSize(action.selected.size)
                 }
             }
+        }
+    }
+
+    private suspend fun getNumberOfScannedSongs(): Int {
+        if (_isScanning.value) return 0
+
+        _isScanning.value = true
+        return try {
+            val count = songRepository.forceResync(applyFilters = true)
+            count
+        } finally {
+            _isScanning.value = false
         }
     }
 

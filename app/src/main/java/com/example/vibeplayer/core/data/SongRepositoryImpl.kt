@@ -7,14 +7,16 @@ import com.example.vibeplayer.core.domain.LocalSongProvider
 import com.example.vibeplayer.core.domain.SettingsDataStore
 import com.example.vibeplayer.core.domain.SongRepository
 import com.example.vibeplayer.core.domain.model.Song
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class SongRepositoryImpl(
     private val songDao: SongDao,
     private val settingsDataStore: SettingsDataStore,
-    private val localSongProvider: LocalSongProvider
+    private val localSongProvider: LocalSongProvider,
 ) : SongRepository {
 
     override fun observeSongs(): Flow<List<Song>> = songDao.observeSongs().map { it.toDomainList() }
@@ -34,7 +36,7 @@ class SongRepositoryImpl(
         settingsDataStore.setDefaultSize(size)
     }
 
-    suspend fun cleanUpRemovedSongs() {
+    suspend fun cleanUpRemovedSongs() = withContext(Dispatchers.IO) {
         val songs = songDao.getSongsList()
         if (songs.isNotEmpty()) {
             songs.forEach {
@@ -45,19 +47,19 @@ class SongRepositoryImpl(
         }
     }
 
-    override suspend fun syncOnAppStart(): Boolean {
+    override suspend fun syncOnAppStart(): Boolean = withContext(Dispatchers.IO) {
         val isEmpty = songDao.getSongCount() == 0
 
         if (isEmpty) {
-            syncSongs(applyFilters = false)
-            return true
+            forceResync(applyFilters = false)
+            return@withContext true
         } else {
             cleanUpRemovedSongs()
         }
-        return false
+        return@withContext false
     }
 
-    override suspend fun syncSongs(applyFilters: Boolean): Int {
+    override suspend fun forceResync(applyFilters: Boolean): Int = withContext(Dispatchers.IO) {
         val songsFromDevice = localSongProvider.getAllSongs()
 
         songDao.removeAllSongs()
@@ -74,12 +76,12 @@ class SongRepositoryImpl(
         }
 
         songDao.upsertAll(finalSongs.toEntityList())
-        return finalSongs.size
+        return@withContext finalSongs.size
     }
 
-    override suspend fun syncSongsIfEmpty(): Boolean {
-        return if (songDao.getSongCount() == 0) {
-            syncSongs(applyFilters = false)
+    override suspend fun syncSongsIfEmpty(): Boolean = withContext(Dispatchers.IO) {
+        return@withContext if (songDao.getSongCount() == 0) {
+            forceResync(applyFilters = false)
             true
         } else {
             false

@@ -21,6 +21,6 @@ interface SongRepository {
     suspend fun syncOnAppStart(): Boolean
 
 
-    suspend fun syncSongs(applyFilters: Boolean = false): Int
+    suspend fun forceResync(applyFilters: Boolean = false): Int
 
 }

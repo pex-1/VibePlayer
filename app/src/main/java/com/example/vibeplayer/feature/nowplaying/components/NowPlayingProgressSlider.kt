@@ -36,7 +36,6 @@ fun NowPlayingProgressSlider(
     state: PlaybackState,
     onAction: (NowPlayingActions) -> Unit = {}
 ) {
-
     val progress = if (state.durationMs > 0) state.positionMs.toFloat() / state.durationMs else 0f
 
     BoxWithConstraints(
