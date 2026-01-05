@@ -72,4 +72,49 @@ class LocalSongProviderImpl(private val contentResolver: ContentResolver) : Loca
             false
         }
     }
+
+    override suspend fun findMovedSong(oldSong: Song): Long? =
+        withContext(Dispatchers.IO) {
+
+            val selection = """
+            ${MediaStore.Audio.Media.DURATION} = ? AND
+            ${MediaStore.Audio.Media.SIZE} = ? AND
+            ${MediaStore.Audio.Media.IS_MUSIC} != 0
+        """.trimIndent()
+
+            val args = arrayOf(
+                oldSong.durationMs.toString(),
+                oldSong.sizeBytes.toString()
+            )
+
+            contentResolver.query(
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                arrayOf(
+                    MediaStore.Audio.Media._ID,
+                    MediaStore.Audio.Media.TITLE,
+                    MediaStore.Audio.Media.ARTIST
+                ),
+                selection,
+                args,
+                null
+            )?.use { cursor ->
+
+                val idCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+                val titleCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
+                val artistCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
+
+                while (cursor.moveToNext()) {
+                    val title = cursor.getString(titleCol)
+                    val artist = cursor.getString(artistCol)
+
+                    if (title.equals(oldSong.title, ignoreCase = true) &&
+                        artist.equals(oldSong.artist, ignoreCase = true)
+                    ) {
+                        return@withContext cursor.getLong(idCol)
+                    }
+                }
+            }
+
+            null
+        }
 }

@@ -2,6 +2,7 @@ package com.example.vibeplayer.core.data
 
 import com.example.vibeplayer.core.database.SongDao
 import com.example.vibeplayer.core.database.toDomainList
+import com.example.vibeplayer.core.database.toDomainModel
 import com.example.vibeplayer.core.database.toEntityList
 import com.example.vibeplayer.core.domain.LocalSongProvider
 import com.example.vibeplayer.core.domain.SettingsDataStore
@@ -41,7 +42,15 @@ class SongRepositoryImpl(
         if (songs.isNotEmpty()) {
             songs.forEach {
                 if (!localSongProvider.songExists(it.mediaStoreId)) {
-                    songDao.removeSong(it)
+
+                    //check if songs have been moved rather than deleted
+                    val movedId = localSongProvider.findMovedSong(it.toDomainModel())
+                    if (movedId != null) {
+                        songDao.updateMediaStoreId(it.id, movedId)
+                    } else{
+                        songDao.removeSong(it)
+                    }
+
                 }
             }
         }

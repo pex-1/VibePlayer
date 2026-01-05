@@ -19,8 +19,12 @@ fun MainScreenRoot(
 
     MainScreen(state) {
         viewModel.onAction(it)
-        if (it is MainActions.OpenNowPlaying) {
-            openNowPlaying(it.songId)
+        when(it) {
+            is MainActions.OpenNowPlaying -> openNowPlaying(it.songId)
+            is MainActions.OnShuffleAction, MainActions.OnPlayAction -> {
+                openNowPlaying(-1)
+            }
+            else -> {}
         }
     }
 }

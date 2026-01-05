@@ -31,6 +31,9 @@ interface SongDao {
     @Query("DELETE FROM songs WHERE mediaStoreId IN (:mediaStoreIds)")
     suspend fun deleteByMediaStoreIds(mediaStoreIds: Set<Long>)
 
+    @Query("UPDATE songs SET mediaStoreId = :newId WHERE id = :songId")
+    suspend fun updateMediaStoreId(songId: Long, newId: Long)
+
     @Upsert
     suspend fun upsertSong(song: SongEntity)
 
