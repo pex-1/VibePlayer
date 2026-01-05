@@ -50,7 +50,6 @@ class PlaybackController(
                         isPlaying = player.isPlaying,
                         index = currentIndex,
                         positionMs = player.currentPosition,
-                        durationMs = player.duration,
                         hasNext = currentIndex < playlist.lastIndex,
                         hasPrevious = currentIndex > 0,
                         artist = mediaItem?.mediaMetadata?.artist?.toString() ?: "Unknown Artist",
