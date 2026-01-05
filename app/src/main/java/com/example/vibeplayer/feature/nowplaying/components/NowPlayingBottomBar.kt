@@ -40,9 +40,7 @@ fun NowPlayingBottomBar(
     ) {
         NowPlayingProgressSlider(
             state = state,
-            onSeek = {
-                onAction(NowPlayingActions.OnSeekAction(it))
-            }
+            onAction = onAction
         )
 
         Row(
@@ -52,7 +50,6 @@ fun NowPlayingBottomBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-
             val iconTint = if (state.isPlaying) MaterialTheme.colorScheme.textSecondary
             else MaterialTheme.colorScheme.textDisabled
             val iconBackground = if (state.isPlaying) MaterialTheme.colorScheme.surfaceOutline

@@ -5,5 +5,4 @@ sealed interface MainActions {
     data class OpenNowPlaying(val songId: Long) : MainActions
     data object OnShuffleAction : MainActions
     data object OnPlayAction : MainActions
-
 }

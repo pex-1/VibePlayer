@@ -1,4 +1,4 @@
-package com.example.vibeplayer.core.datastore
+package com.example.vibeplayer.core.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

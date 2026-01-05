@@ -25,12 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.vibeplayer.core.presentation.designsystem.buttons.VibePlayerPrimaryButton
-import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerImages
+import com.example.vibeplayer.core.presentation.designsystem.theme.RadarImage
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.util.ObserveAsEvents
 import com.example.vibeplayer.feature.settings.component.SettingsControlComponent
@@ -103,7 +102,7 @@ fun SettingsScreen(
                 modifier = Modifier
                     .rotate(rotationAngle)
                     .size(140.dp),
-                painter = VibePlayerImages.RadarImage,
+                painter = RadarImage,
                 contentDescription = "Radar image"
             )
 

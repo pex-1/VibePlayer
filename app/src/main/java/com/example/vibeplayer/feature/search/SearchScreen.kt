@@ -53,7 +53,6 @@ fun SearchScreenRoot(
     onCancelClick: () -> Unit = {},
     onPlaySong: (Long) -> Unit = {}
 ) {
-
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     SearchScreen(state) { action ->
@@ -88,7 +87,6 @@ fun SearchScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-
         Column {
             Row(
                 modifier = Modifier
@@ -111,7 +109,6 @@ fun SearchScreen(
                             contentDescription = "Search",
                             tint = MaterialTheme.colorScheme.textSecondary
                         )
-
                     },
                     trailingIcon = {
                         IconButton(
@@ -139,17 +136,8 @@ fun SearchScreen(
                         unfocusedContainerColor = MaterialTheme.colorScheme.buttonHover,
                         focusedBorderColor = MaterialTheme.colorScheme.surfaceOutline,
                         unfocusedBorderColor = MaterialTheme.colorScheme.surfaceOutline,
-                        focusedTextColor = MaterialTheme.colorScheme.textPrimary,
-                        unfocusedTextColor = MaterialTheme.colorScheme.textPrimary,
-                        focusedLeadingIconColor = MaterialTheme.colorScheme.textSecondary,
-                        unfocusedLeadingIconColor = MaterialTheme.colorScheme.textSecondary,
-                        focusedTrailingIconColor = MaterialTheme.colorScheme.textSecondary,
-                        unfocusedTrailingIconColor = MaterialTheme.colorScheme.textSecondary,
-                        focusedPlaceholderColor = MaterialTheme.colorScheme.textSecondary,
-                        unfocusedPlaceholderColor = MaterialTheme.colorScheme.textSecondary,
                         cursorColor = MaterialTheme.colorScheme.textPrimary
                     )
-
                 )
 
                 Text(
@@ -171,8 +159,7 @@ fun SearchScreen(
                         .fillMaxWidth(),
                     text = "No results found.",
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyLargeRegular,
-
+                    style = MaterialTheme.typography.bodyLargeRegular
                     )
             }
             val lazyListState = rememberLazyListState()
@@ -185,7 +172,7 @@ fun SearchScreen(
             ) {
                 itemsIndexed(
                     items = state.songs,
-                    key = { _, song -> song.id }
+                    key = { _, song -> song.songId }
                 ) { index, song ->
                     SongListItem(song) {
                 onAction(SearchActions.PlaySong(it))

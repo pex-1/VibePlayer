@@ -6,5 +6,5 @@ sealed interface NowPlayingActions {
     data object OnPlayPreviousAction : NowPlayingActions
     data object OnRepeatAction : NowPlayingActions
     data object OnShuffleAction : NowPlayingActions
-    data class OnSeekAction(val position: Long) : NowPlayingActions
+    data class OnSeekAction(val position: Long? = null, val inProgress: Boolean = false) : NowPlayingActions
 }

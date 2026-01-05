@@ -9,7 +9,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.vibeplayer.app.navigation.NavigationRoot
-import com.example.vibeplayer.app.navigation.NavigationScreens
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 
 class MainActivity : ComponentActivity() {

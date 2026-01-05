@@ -50,7 +50,6 @@ class PlaybackController(
                         isPlaying = player.isPlaying,
                         index = currentIndex,
                         positionMs = player.currentPosition,
-                        durationMs = player.duration,
                         hasNext = currentIndex < playlist.lastIndex,
                         hasPrevious = currentIndex > 0,
                         artist = mediaItem?.mediaMetadata?.artist?.toString() ?: "Unknown Artist",
@@ -60,6 +59,12 @@ class PlaybackController(
                 }
             }
         })
+    }
+
+    fun showMiniPlayer(){
+        _playbackState.update {
+            it.copy(showMiniPlayer = true)
+        }
     }
 
     private fun startPositionUpdates() {
@@ -105,12 +110,20 @@ class PlaybackController(
         player.play()
     }
 
-    fun playPause() {
+    fun togglePlayPause() {
         if (player.isPlaying) {
             player.pause()
         } else {
             player.play()
         }
+    }
+
+    fun play() {
+        player.play()
+    }
+
+    fun pause() {
+        player.pause()
     }
 
     fun toggleRepeatMode() {
@@ -132,6 +145,9 @@ class PlaybackController(
 
     fun seekTo(position: Long) {
         player.seekTo(position)
+        _playbackState.update {
+            it.copy(positionMs = position)
+        }
     }
 
     fun next() {
@@ -144,5 +160,9 @@ class PlaybackController(
         if (player.hasPreviousMediaItem()) {
             player.seekToPreviousMediaItem()
         }
+    }
+
+    fun releasePlayer() {
+        player.release()
     }
 }

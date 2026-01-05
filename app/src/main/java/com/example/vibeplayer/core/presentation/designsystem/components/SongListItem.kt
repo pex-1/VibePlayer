@@ -36,11 +36,10 @@ fun SongListItem(
     song: Song,
     onSongClickedAction: (Long) -> Unit = {}
 ) {
-
     Row(
         modifier = Modifier
             .clickable(onClick = {
-                onSongClickedAction(song.id)
+                onSongClickedAction(song.songId)
             })
             .padding(vertical = 12.dp)
             .height(IntrinsicSize.Max),
@@ -53,7 +52,7 @@ fun SongListItem(
                 .clip(RoundedCornerShape(10.dp)),
             contentDescription = null,
             model = ImageRequest.Builder(LocalContext.current)
-                .data(song.embeddedArt)
+                .data(song.albumArtUri)
                 .crossfade(true)
                 .build(),
             contentScale = ContentScale.Crop,
@@ -91,11 +90,10 @@ fun SongListItem(
         }
 
         Text(
-            text = song.duration.toMinutesSeconds(),
+            text = song.durationMs.toMinutesSeconds(),
             style = MaterialTheme.typography.bodyMediumRegular,
         )
     }
-
 }
 
 @Preview(showBackground = true)

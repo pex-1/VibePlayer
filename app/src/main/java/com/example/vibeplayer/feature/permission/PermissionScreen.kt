@@ -44,9 +44,9 @@ fun PermissionScreenRoot(
     viewModel: PermissionViewModel = koinViewModel(),
     onNavigateToMain: () -> Unit
 ) {
-    val permissionUiState by viewModel.permissionUiState.collectAsStateWithLifecycle()
+    val state by viewModel.permissionState.collectAsStateWithLifecycle()
 
-    PermissionScreen(permissionUiState) { action ->
+    PermissionScreen(state) { action ->
         when (action) {
             is PermissionActions.NavigateMainPage -> onNavigateToMain()
             else -> viewModel.onActions(action)
@@ -57,7 +57,7 @@ fun PermissionScreenRoot(
 
 @Composable
 fun PermissionScreen(
-    permissionUiState: PermissionUiState,
+    state: PermissionState,
     onActions: (PermissionActions) -> Unit,
 ) {
     val context = LocalContext.current
@@ -73,6 +73,7 @@ fun PermissionScreen(
                     onActions(PermissionActions.NavigateMainPage)
                 }
             }
+
             else -> {}
         }
     }
@@ -130,7 +131,7 @@ fun PermissionScreen(
                 permissionLauncher.launch(permission)
             }
         }
-        if (permissionUiState.showDialog) {
+        if (state.showDialog) {
             VibePlayerDialog(
                 modifier = Modifier.fillMaxWidth(),
                 title = stringResource(R.string.permission_denied),
@@ -156,7 +157,7 @@ fun PermissionScreen(
 private fun PermissionScreenPreview() {
     VibePlayerTheme {
         PermissionScreen(
-            PermissionUiState(false),
+            PermissionState(false),
         ) { }
     }
 }

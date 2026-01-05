@@ -1,6 +1,5 @@
 package com.example.vibeplayer.feature.permission
 
-data class PermissionUiState(
-    val hasGranted: Boolean? = null,
+data class PermissionState(
     val showDialog: Boolean = false,
 )

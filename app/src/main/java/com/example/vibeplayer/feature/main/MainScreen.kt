@@ -7,20 +7,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.feature.main.components.EmptyState
 import com.example.vibeplayer.feature.main.components.LoadingState
-import com.example.vibeplayer.feature.main.components.SongList
+import com.example.vibeplayer.feature.main.components.TrackListState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MainScreenRoot(
     viewModel: MainViewModel = koinViewModel(),
-    openNowPlaying: () -> Unit = {},
+    openNowPlaying: (Long) -> Unit = {},
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     MainScreen(state) {
         viewModel.onAction(it)
-        if (it !is MainActions.SyncSongs) {
-            openNowPlaying()
+        when(it) {
+            is MainActions.OpenNowPlaying -> openNowPlaying(it.songId)
+            is MainActions.OnShuffleAction, MainActions.OnPlayAction -> {
+                openNowPlaying(-1)
+            }
+            else -> {}
         }
     }
 }
@@ -32,10 +36,10 @@ fun MainScreen(
 ) {
     if (state.isLoading) {
         LoadingState()
-    } else if (state.songs.isEmpty()) {
+    } else if (state.isEmpty) {
         EmptyState(onAction = onAction)
     } else {
-        SongList(state.songs, onAction = onAction)
+        TrackListState(state.songs, onAction = onAction)
     }
 }
 

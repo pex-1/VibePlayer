@@ -38,8 +38,9 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun NowPlayingScreenRoot(
-    viewModel: NowPlayingViewModel = koinViewModel()
+    songId: Long,
 ) {
+    val viewModel: NowPlayingViewModel = koinViewModel { parametersOf(songId) }
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     NowPlayingScreen(state) { action ->

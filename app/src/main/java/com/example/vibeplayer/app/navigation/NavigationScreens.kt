@@ -13,7 +13,7 @@ sealed interface NavigationScreens: NavKey {
     data object MainPage : NavigationScreens
 
     @Serializable
-    data object NowPlaying : NavigationScreens
+    data class NowPlaying(val songId: Long) : NavigationScreens
 
     @Serializable
     data object Settings : NavigationScreens

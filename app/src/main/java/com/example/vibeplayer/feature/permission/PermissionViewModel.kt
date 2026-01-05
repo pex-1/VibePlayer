@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class PermissionViewModel() : ViewModel() {
-    private val _permissionUiState = MutableStateFlow(PermissionUiState())
-    val permissionUiState = _permissionUiState.asStateFlow()
+    private val _permissionState = MutableStateFlow(PermissionState())
+    val permissionState = _permissionState.asStateFlow()
 
     fun onActions(permissionActions: PermissionActions) {
         when (permissionActions) {
@@ -17,7 +17,7 @@ class PermissionViewModel() : ViewModel() {
     }
 
     private fun showDialog(showDialog: Boolean){
-        _permissionUiState.update { newState->
+        _permissionState.update { newState->
             newState.copy(showDialog = showDialog)
         }
     }

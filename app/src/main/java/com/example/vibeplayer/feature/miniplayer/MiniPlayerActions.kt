@@ -1,4 +1,4 @@
-package com.example.vibeplayer.core.playback
+package com.example.vibeplayer.feature.miniplayer
 
 sealed interface MiniPlayerActions {
     data object OnPlayPauseAction: MiniPlayerActions

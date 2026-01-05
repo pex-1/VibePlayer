@@ -16,7 +16,6 @@ data class SnackbarAction(
 
 object SnackbarController {
 
-    //channel - similar to shared flow, but meant to have one subscriber that listens to these events
     private val _events = Channel<SnackbarEvent>()
     val events = _events.receiveAsFlow()
 
