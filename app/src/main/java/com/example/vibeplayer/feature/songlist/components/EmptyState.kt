@@ -1,4 +1,4 @@
-package com.example.vibeplayer.feature.main.components
+package com.example.vibeplayer.feature.songlist.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,11 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.example.vibeplayer.core.presentation.designsystem.buttons.VibePlayerPrimaryButton
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyLargeMedium
-import com.example.vibeplayer.feature.main.MainActions
+import com.example.vibeplayer.feature.songlist.SongListActions
 
 @Composable
 fun EmptyState(
-    onAction: (MainActions) -> Unit
+    onAction: (SongListActions) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -37,7 +37,7 @@ fun EmptyState(
         VibePlayerPrimaryButton(
             text = "Scan again"
         ) {
-            onAction(MainActions.SyncSongs)
+            onAction(SongListActions.SyncSongs)
         }
     }
 }

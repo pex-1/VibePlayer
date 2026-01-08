@@ -5,9 +5,6 @@ import com.example.vibeplayer.core.domain.LocalSongProvider
 import com.example.vibeplayer.core.domain.SettingsDataStore
 import com.example.vibeplayer.core.domain.SongRepository
 import com.example.vibeplayer.core.domain.model.Song
-import com.example.vibeplayer.core.mapper.toDomainList
-import com.example.vibeplayer.core.mapper.toDomainModel
-import com.example.vibeplayer.core.mapper.toEntityList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -68,7 +65,7 @@ class SongRepositoryImpl(
         return@withContext false
     }
 
-    override suspend fun forceResync(applyFilters: Boolean): Int = withContext(Dispatchers.IO) {
+    override suspend fun forceResync(applyFilters: Boolean): Int {
         val songsFromDevice = localSongProvider.getAllSongs()
 
         songDao.removeAllSongs()
@@ -85,11 +82,11 @@ class SongRepositoryImpl(
         }
 
         songDao.upsertAll(finalSongs.toEntityList())
-        return@withContext finalSongs.size
+        return finalSongs.size
     }
 
-    override suspend fun syncSongsIfEmpty(): Boolean = withContext(Dispatchers.IO) {
-        return@withContext if (songDao.getSongCount() == 0) {
+    override suspend fun syncSongsIfEmpty(): Boolean {
+        return if (songDao.getSongCount() == 0) {
             forceResync(applyFilters = false)
             true
         } else {

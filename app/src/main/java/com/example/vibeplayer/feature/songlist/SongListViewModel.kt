@@ -1,9 +1,7 @@
-package com.example.vibeplayer.feature.main
+package com.example.vibeplayer.feature.songlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.media3.common.MediaItem
-import androidx.media3.common.MediaMetadata
 import com.example.vibeplayer.core.domain.SongRepository
 import com.example.vibeplayer.core.domain.model.Song
 import com.example.vibeplayer.core.playback.PlaybackController
@@ -16,19 +14,19 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class MainViewModel(
+class SongListViewModel(
     private val songRepository: SongRepository,
     private val playbackController: PlaybackController
 ) : ViewModel() {
 
     private val isSyncing = MutableStateFlow(true)
 
-    val state: StateFlow<MainState> =
+    val state: StateFlow<SongListState> =
         combine(
             songRepository.observeSongs(),
             isSyncing
         ) { songs, syncing ->
-            MainState(
+            SongListState(
                 isLoading = syncing,
                 songs = songs
             )
@@ -36,7 +34,7 @@ class MainViewModel(
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = MainState(isLoading = true)
+                initialValue = SongListState(isLoading = true)
             )
 
     private fun observeSongsForPlayer() {
@@ -47,7 +45,7 @@ class MainViewModel(
                 }
                 .collectLatest { songs ->
                     if (songs.isNotEmpty()) {
-                        setupPlayerPlaylist(songs)
+                        playbackController.setPlaylist(songs)
                     }
                 }
         }
@@ -74,30 +72,12 @@ class MainViewModel(
         }
     }
 
-    private fun setupPlayerPlaylist(songs: List<Song>) {
-        val mediaItems = songs.map { song ->
-            MediaItem.Builder()
-                .setMediaId(song.songId.toString())
-                .setUri(song.contentUri)
-                .setMediaMetadata(
-                    MediaMetadata.Builder()
-                        .setTitle(song.title)
-                        .setArtist(song.artist)
-                        .setArtworkUri(song.albumArtUri)
-                        .build()
-                )
-                .build()
-        }
-        playbackController.setPlaylist(mediaItems)
-    }
-
-
-    fun onAction(action: MainActions) {
+    fun onAction(action: SongListActions) {
         when (action) {
-            is MainActions.SyncSongs -> onForceResync()
+            is SongListActions.SyncSongs -> onForceResync()
 
-            is MainActions.OnPlayAction -> playbackController.playFromTheStart()
-            is MainActions.OnShuffleAction -> playbackController.shuffleAndPlay()
+            is SongListActions.OnPlayAction -> playbackController.playFromTheStart()
+            is SongListActions.OnShuffleAction -> playbackController.shuffleAndPlay()
             else -> {}
         }
     }

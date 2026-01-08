@@ -1,4 +1,4 @@
-package com.example.vibeplayer.feature.main
+package com.example.vibeplayer.feature.songlist
 
 import com.example.vibeplayer.core.domain.model.Song
 

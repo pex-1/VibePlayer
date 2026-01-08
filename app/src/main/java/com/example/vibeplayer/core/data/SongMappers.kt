@@ -1,4 +1,4 @@
-package com.example.vibeplayer.core.mapper
+package com.example.vibeplayer.core.data
 
 import com.example.vibeplayer.core.database.SongEntity
 import com.example.vibeplayer.core.domain.model.Song

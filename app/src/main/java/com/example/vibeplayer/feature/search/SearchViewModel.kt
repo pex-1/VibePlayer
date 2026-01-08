@@ -3,23 +3,19 @@ package com.example.vibeplayer.feature.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vibeplayer.core.domain.SongRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 
-@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+
+@OptIn(FlowPreview::class)
 class SearchViewModel(
     private val repository: SongRepository
 ) : ViewModel() {
@@ -36,25 +32,20 @@ class SearchViewModel(
             .map { it.query }
             .debounce(400)
             .distinctUntilChanged()
-            .flatMapLatest { query ->
-                flow {
-                    if (query.isBlank()) {
-                        emit(SearchState(query = "", isLoading = false))
-                        return@flow
+            .onEach { query ->
+                if (query.isBlank()) {
+                    _state.update {
+                        it.copy(query = "", isLoading = false)
                     }
-
+                } else {
                     val results = repository.searchSongs(query)
-
-                    emit(
-                        _state.value.copy(
-                            songs = results,
-                            isLoading = false
+                    _state.update {
+                        it.copy(
+                            query = query, isLoading = false,
+                            songs = results
                         )
-                    )
+                    }
                 }
-            }
-            .onEach { newState ->
-                _state.value = newState
             }
             .launchIn(viewModelScope)
     }

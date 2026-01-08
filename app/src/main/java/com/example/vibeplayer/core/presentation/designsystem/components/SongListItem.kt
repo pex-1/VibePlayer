@@ -29,7 +29,7 @@ import com.example.vibeplayer.core.presentation.designsystem.theme.accent
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyMediumRegular
 import com.example.vibeplayer.core.util.applyMarquee
 import com.example.vibeplayer.core.util.toMinutesSeconds
-import com.example.vibeplayer.feature.main.PreviewDataSource
+import com.example.vibeplayer.feature.songlist.PreviewDataSource
 
 @Composable
 fun SongListItem(

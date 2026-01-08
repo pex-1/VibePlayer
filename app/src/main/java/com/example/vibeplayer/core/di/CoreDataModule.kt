@@ -34,6 +34,6 @@ val coreModule = module {
         }
     }
     single {
-        PlaybackController(get(), CoroutineScope(SupervisorJob() + Dispatchers.Main))
+        PlaybackController(get())
     }
 }

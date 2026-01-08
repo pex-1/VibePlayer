@@ -32,7 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.vibeplayer.R
 import com.example.vibeplayer.app.MainActivity
 import com.example.vibeplayer.core.presentation.designsystem.buttons.VibePlayerPrimaryButton
-import com.example.vibeplayer.core.presentation.designsystem.components.VibePLayerLifecycleEventListener
+import com.example.vibeplayer.core.presentation.designsystem.components.LifecycleEventListener
 import com.example.vibeplayer.core.presentation.designsystem.components.VibePlayerDialog
 import com.example.vibeplayer.core.presentation.designsystem.theme.LogoIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
@@ -54,7 +54,6 @@ fun PermissionScreenRoot(
     }
 }
 
-
 @Composable
 fun PermissionScreen(
     state: PermissionState,
@@ -65,7 +64,7 @@ fun PermissionScreen(
 
     val permission = activity.permission
 
-    VibePLayerLifecycleEventListener { events ->
+    LifecycleEventListener { events ->
         when (events) {
             Lifecycle.Event.ON_RESUME -> {
                 val hasGranted = activity.checkMediaPermission()

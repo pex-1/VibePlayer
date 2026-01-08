@@ -31,8 +31,8 @@ import com.example.vibeplayer.core.presentation.designsystem.theme.buttonPrimary
 import com.example.vibeplayer.core.presentation.designsystem.theme.textPrimary
 import com.example.vibeplayer.core.presentation.util.ObserveAsEvents
 import com.example.vibeplayer.core.presentation.util.SnackbarController
-import com.example.vibeplayer.feature.main.MainScreenRoot
-import com.example.vibeplayer.feature.main.components.MainAppBar
+import com.example.vibeplayer.feature.songlist.SongListScreenRoot
+import com.example.vibeplayer.feature.songlist.components.SongListAppBar
 import com.example.vibeplayer.feature.nowplaying.NowPlayingScreenRoot
 import com.example.vibeplayer.feature.nowplaying.components.NowPlayingTopBar
 import com.example.vibeplayer.feature.permission.PermissionScreenRoot
@@ -94,14 +94,13 @@ fun NavigationRoot(
             MiniPlayerRoot(
                 isMainScreen = backStack.lastOrNull() is NavigationScreens.MainPage,
                 openNowPlaying = {
-                    //TODO: I'm not happy with passing -1 when current song shouldn't change, but I don't see a better solution
                     backStack.add(NavigationScreens.NowPlaying(-1))
                 })
         },
         topBar = {
             when (currentScreen) {
                 is NavigationScreens.MainPage -> {
-                    MainAppBar(
+                    SongListAppBar(
                         onSearchClicked = {
                             backStack.add(NavigationScreens.Search)
                         },
@@ -147,7 +146,7 @@ fun NavigationRoot(
                 }
 
                 entry<NavigationScreens.MainPage> {
-                    MainScreenRoot(openNowPlaying = {
+                    SongListScreenRoot(openNowPlaying = {
                         backStack.add(NavigationScreens.NowPlaying(it))
                     })
                 }

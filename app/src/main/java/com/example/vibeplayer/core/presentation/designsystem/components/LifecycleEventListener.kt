@@ -8,7 +8,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @Composable
-fun VibePLayerLifecycleEventListener(
+fun LifecycleEventListener(
     onEvent: (Lifecycle.Event) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current

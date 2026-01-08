@@ -1,4 +1,4 @@
-package com.example.vibeplayer.feature.main.components
+package com.example.vibeplayer.feature.songlist.components
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

@@ -36,7 +36,7 @@ class SettingsViewModel(
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Eagerly,
+        started = SharingStarted.Lazily,
         initialValue = SettingsState(
             isScanning = false,
             duration = DurationEnum.SECONDS_30,

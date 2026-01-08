@@ -1,4 +1,4 @@
-package com.example.vibeplayer.feature.main.components
+package com.example.vibeplayer.feature.songlist.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
@@ -42,13 +42,14 @@ import com.example.vibeplayer.core.presentation.designsystem.theme.ShuffleIcon
 import com.example.vibeplayer.core.presentation.designsystem.theme.SurfaceOutline
 import com.example.vibeplayer.core.presentation.designsystem.theme.bodyLargeMedium
 import com.example.vibeplayer.core.presentation.designsystem.theme.textPrimary
-import com.example.vibeplayer.feature.main.MainActions
+import com.example.vibeplayer.feature.songlist.SongListActions
 import kotlinx.coroutines.launch
 
+//naming
 @Composable
-fun TrackListState(
+fun SongList(
     songs: List<Song>,
-    onAction: (MainActions) -> Unit
+    onAction: (SongListActions) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val showScrollToTopButton by remember {
@@ -80,7 +81,7 @@ fun TrackListState(
                             text = "Shuffle",
                             icon = ShuffleIcon,
                             onClick = {
-                                onAction(MainActions.OnShuffleAction)
+                                onAction(SongListActions.OnShuffleAction)
                             }
                         )
                         OutlinedIconButton(
@@ -88,7 +89,7 @@ fun TrackListState(
                             text = "Play",
                             icon = OutlinedPlayIcon,
                             onClick = {
-                                onAction(MainActions.OnPlayAction)
+                                onAction(SongListActions.OnPlayAction)
                             }
                         )
                     }
@@ -105,7 +106,7 @@ fun TrackListState(
                 key = { _, song -> song.songId }
             ) { index, song ->
                 SongListItem(song) {
-                    onAction(MainActions.OpenNowPlaying(it))
+                    onAction(SongListActions.OpenNowPlaying(it))
                 }
                 if (index < songs.lastIndex) {
                     HorizontalDivider(thickness = 1.dp, color = SurfaceOutline)

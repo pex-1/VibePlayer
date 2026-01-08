@@ -44,7 +44,7 @@ import com.example.vibeplayer.core.presentation.designsystem.theme.buttonHover
 import com.example.vibeplayer.core.presentation.designsystem.theme.surfaceOutline
 import com.example.vibeplayer.core.presentation.designsystem.theme.textPrimary
 import com.example.vibeplayer.core.presentation.designsystem.theme.textSecondary
-import com.example.vibeplayer.feature.main.PreviewDataSource.previewSongList
+import com.example.vibeplayer.feature.songlist.PreviewDataSource.previewSongList
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

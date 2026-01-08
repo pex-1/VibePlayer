@@ -1,10 +1,14 @@
 package com.example.vibeplayer.core.playback
 
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import com.example.vibeplayer.core.domain.model.Song
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,9 +19,10 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class PlaybackController(
-    private val player: ExoPlayer,
-    private val scope: CoroutineScope
+    private val player: ExoPlayer
 ) {
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
     private var playlist: List<MediaItem> = emptyList()
     private var currentIndex = 0
 
@@ -61,7 +66,7 @@ class PlaybackController(
         })
     }
 
-    fun showMiniPlayer(){
+    fun showMiniPlayer() {
         _playbackState.update {
             it.copy(showMiniPlayer = true)
         }
@@ -87,8 +92,22 @@ class PlaybackController(
         positionJob = null
     }
 
-    fun setPlaylist(items: List<MediaItem>) {
-        playlist = items
+    fun setPlaylist(songs: List<Song>) {
+        val mediaItems = songs.map { song ->
+            MediaItem.Builder()
+                .setMediaId(song.songId.toString())
+                .setUri(song.contentUri)
+                .setMediaMetadata(
+                    MediaMetadata.Builder()
+                        .setTitle(song.title)
+                        .setArtist(song.artist)
+                        .setArtworkUri(song.albumArtUri)
+                        .build()
+                )
+                .build()
+        }
+
+        playlist = mediaItems
         player.setMediaItems(playlist, 0, 0L)
         player.prepare()
     }

@@ -1,27 +1,27 @@
-package com.example.vibeplayer.feature.main
+package com.example.vibeplayer.feature.songlist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.vibeplayer.core.presentation.designsystem.theme.VibePlayerTheme
-import com.example.vibeplayer.feature.main.components.EmptyState
-import com.example.vibeplayer.feature.main.components.LoadingState
-import com.example.vibeplayer.feature.main.components.TrackListState
+import com.example.vibeplayer.feature.songlist.components.EmptyState
+import com.example.vibeplayer.feature.songlist.components.LoadingState
+import com.example.vibeplayer.feature.songlist.components.SongList
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun MainScreenRoot(
-    viewModel: MainViewModel = koinViewModel(),
+fun SongListScreenRoot(
+    viewModel: SongListViewModel = koinViewModel(),
     openNowPlaying: (Long) -> Unit = {},
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    MainScreen(state) {
+    SongListScreen(state) {
         viewModel.onAction(it)
         when(it) {
-            is MainActions.OpenNowPlaying -> openNowPlaying(it.songId)
-            is MainActions.OnShuffleAction, MainActions.OnPlayAction -> {
+            is SongListActions.OpenNowPlaying -> openNowPlaying(it.songId)
+            is SongListActions.OnShuffleAction, SongListActions.OnPlayAction -> {
                 openNowPlaying(-1)
             }
             else -> {}
@@ -30,23 +30,23 @@ fun MainScreenRoot(
 }
 
 @Composable
-fun MainScreen(
-    state: MainState = MainState(),
-    onAction: (MainActions) -> Unit = {}
+fun SongListScreen(
+    state: SongListState = SongListState(),
+    onAction: (SongListActions) -> Unit = {}
 ) {
     if (state.isLoading) {
         LoadingState()
     } else if (state.isEmpty) {
         EmptyState(onAction = onAction)
     } else {
-        TrackListState(state.songs, onAction = onAction)
+        SongList(state.songs, onAction = onAction)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun MainScreenPreview() {
+private fun SongListScreenPreview() {
     VibePlayerTheme {
-        MainScreen(MainState(isLoading = false, songs = PreviewDataSource.previewSongList))
+        SongListScreen(SongListState(isLoading = false, songs = PreviewDataSource.previewSongList))
     }
 }

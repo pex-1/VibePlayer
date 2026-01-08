@@ -1,4 +1,4 @@
-package com.example.vibeplayer.feature.main.components
+package com.example.vibeplayer.feature.songlist.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +32,7 @@ import com.example.vibeplayer.core.presentation.designsystem.theme.textSecondary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainAppBar(
+fun SongListAppBar(
     onSettingsClick: () -> Unit= {},
     onSearchClicked: () -> Unit= {}
 ) {
@@ -101,8 +101,8 @@ fun MainAppBar(
 
 @Preview
 @Composable
-private fun MainAppBarPreview() {
+private fun SongListAppBarPreview() {
     VibePlayerTheme {
-        MainAppBar()
+        SongListAppBar()
     }
 }
