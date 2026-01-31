@@ -1,1 +1,0 @@
-Dev Campus VibePlayer app
