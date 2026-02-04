@@ -71,6 +71,7 @@ fun SongList(
                 Column (
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(top = 16.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),

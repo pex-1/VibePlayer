@@ -50,6 +50,14 @@ val MusicIcon: ImageVector
     @Composable
     get() = ImageVector.Companion.vectorResource(R.drawable.music)
 
+val PlaylistIcon: ImageVector
+    @Composable
+    get() = ImageVector.Companion.vectorResource(R.drawable.playlist)
+
+val FavouritesIcon: ImageVector
+    @Composable
+    get() = ImageVector.Companion.vectorResource(R.drawable.heart)
+
 val SearchIcon: ImageVector
     @Composable
     get() = ImageVector.Companion.vectorResource(R.drawable.search)
@@ -73,3 +81,11 @@ val RepeatAllIcon: ImageVector
 val ShuffleIcon: ImageVector
     @Composable
     get() = ImageVector.Companion.vectorResource(R.drawable.shuffle)
+
+val PlusIcon: ImageVector
+    @Composable
+    get() = ImageVector.Companion.vectorResource(R.drawable.plus)
+
+val MenuIcon: ImageVector
+    @Composable
+    get() = ImageVector.Companion.vectorResource(R.drawable.menu_dots)

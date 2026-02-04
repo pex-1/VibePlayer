@@ -21,14 +21,18 @@ class SongListViewModel(
 
     private val isSyncing = MutableStateFlow(true)
 
+    private val selectedTab = MutableStateFlow(ContentDestination.SONGS)
+
     val state: StateFlow<SongListState> =
         combine(
             songRepository.observeSongs(),
-            isSyncing
-        ) { songs, syncing ->
+            isSyncing,
+            selectedTab
+        ) { songs, syncing, selectedTab ->
             SongListState(
                 isLoading = syncing,
-                songs = songs
+                songs = songs,
+                selectedTab = selectedTab
             )
         }
             .stateIn(
@@ -78,6 +82,7 @@ class SongListViewModel(
 
             is SongListActions.OnPlayAction -> playbackController.playFromTheStart()
             is SongListActions.OnShuffleAction -> playbackController.shuffleAndPlay()
+            is SongListActions.OnTabSelected -> selectedTab.value = action.destination
             else -> {}
         }
     }
